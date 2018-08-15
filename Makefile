@@ -189,7 +189,13 @@ $(BUILD_DIR):
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
-  
+
+#######################################
+# Program
+#######################################
+upload: 
+	openocd -f board/st_nucleo_f4.cfg -c "reset_config trst_only combined" -c "program build/$(TARGET).elf verify reset"
+
 #######################################
 # dependencies
 #######################################
