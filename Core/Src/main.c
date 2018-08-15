@@ -45,7 +45,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "uart_util_hal.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -113,6 +113,8 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
   printf("Hello!\r\n");
+  HAL_Delay(500);
+  putch('a');
   HAL_Delay(500);
   }
   /* USER CODE END 3 */
