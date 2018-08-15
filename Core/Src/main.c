@@ -100,7 +100,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
+  UART_Util_Init(&huart2);
+  printf("Build: %s %s\r\n",__DATE__,__TIME__);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,7 +112,8 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+  printf("Hello!\r\n");
+  HAL_Delay(500);
   }
   /* USER CODE END 3 */
 
