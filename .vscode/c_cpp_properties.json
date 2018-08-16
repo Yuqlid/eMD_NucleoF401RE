@@ -9,7 +9,13 @@
                     "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc",
                     "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
                     "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
-                    "${workspaceFolder}/Drivers/CMSIS/Include"
+                    "${workspaceFolder}/Drivers/CMSIS/Include",
+                    "Drivers/eMD6/driver/eMPL",
+                    "Drivers/eMD6/driver/include",
+                    "Drivers/eMD6/driver/stm32L",
+                    "Drivers/eMD6/eMPL-hal",
+                    "Drivers/eMD6/mllite",
+                    "Drivers/eMD6/mpl"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },
@@ -19,7 +25,13 @@
                 "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc",
                 "${workspaceFolder}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
                 "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
-                "${workspaceFolder}/Drivers/CMSIS/Include"
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "Drivers/eMD6/driver/eMPL",
+                "Drivers/eMD6/driver/include",
+                "Drivers/eMD6/driver/stm32L",
+                "Drivers/eMD6/eMPL-hal",
+                "Drivers/eMD6/mllite",
+                "Drivers/eMD6/mpl"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
