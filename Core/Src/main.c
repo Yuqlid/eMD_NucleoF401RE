@@ -794,13 +794,12 @@ int main(void)
     */
 
   /* Allows use of the MPL APIs in read_from_mpl. */
-  inv_enable_eMPL_outputs();
+    inv_enable_eMPL_outputs();
 
   result = inv_start_mpl();
   if(result == INV_ERROR_NOT_AUTHORIZED){
-    while (1){
-      MPL_LOGE("Not authorized.\n");
-    }
+    MPL_LOGE("Not authorized.\n");
+    Error_Handler();
   }
   if(result){
     MPL_LOGE("Could not start the MPL.\n");
@@ -934,11 +933,12 @@ timestamp = HAL_GetTick();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+  /*
     printf("Hello!\r\n");
     HAL_Delay(500);
     putch('a');
     HAL_Delay(500);
-
+*/
     unsigned long sensor_timestamp;
     int new_data = 0;
 /*
@@ -1207,6 +1207,8 @@ void _Error_Handler(char *file, int line)
   /* User can add his own implementation to report the HAL error return state */
   while(1)
   {
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    HAL_Delay(300);
   }
   /* USER CODE END Error_Handler_Debug */
 }
