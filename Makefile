@@ -36,33 +36,8 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-Core/Src/main.c \
-Core/Src/gpio.c \
-Core/Src/dma.c \
-Core/Src/i2c.c \
-Core/Src/usart.c \
-Core/Src/stm32f4xx_it.c \
-Core/Src/stm32f4xx_hal_msp.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c \
-Core/Src/system_stm32f4xx.c  \
-Core/Src/uart_util_hal.c \
-Core/Src/syscalls.c \
+$(wildcard Core/Src/*.c) \
+$(wildcard Drivers/STM32F4xx_HAL_Driver/Src/*.c) \
 $(wildcard Drivers/eMD6/driver/eMPL/*.c) \
 Drivers/eMD6/driver/stm32L/log_stm32.c \
 Drivers/eMD6/eMPL-hal/eMPL_outputs.c \
@@ -92,7 +67,7 @@ SZ = $(PREFIX)size
 endif
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
- 
+
 #######################################
 # CFLAGS
 #######################################
@@ -115,7 +90,10 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F401xE \
+-DSTM32F401xE
+
+# C defines for eMD6
+C_DEFS_EMD = \
 -DMPU9250 \
 -DEMPL_TARGET_STM32F4 \
 -DUSE_DMP \
@@ -123,6 +101,8 @@ C_DEFS =  \
 -DEMPL_LOG_NDEBUG=1 \
 -DREMOVE_LOGGING \
 -DARM_MATH_CM4
+
+C_DEFS += $(C_DEFS_EMD)
 
 # AS includes
 AS_INCLUDES = 
@@ -133,7 +113,10 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_HAL_Driver/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
--IDrivers/CMSIS/Include \
+-IDrivers/CMSIS/Include
+
+# C includes  for eMD6
+C_INCLUDES_EMD =  \
 -IDrivers/eMD6/driver/eMPL \
 -IDrivers/eMD6/driver/include \
 -IDrivers/eMD6/driver/stm32L \
@@ -141,6 +124,7 @@ C_INCLUDES =  \
 -IDrivers/eMD6/mllite \
 -IDrivers/eMD6/mpl
 
+C_INCLUDES += $(C_INCLUDES_EMD)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
