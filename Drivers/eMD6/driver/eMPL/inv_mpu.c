@@ -37,14 +37,13 @@
  * min(int a, int b)
  */
 #if defined EMPL_TARGET_STM32F4
-//#include "i2c.h"   
-//#include "main.h"
 #include "log.h"
 #include "stm32_empl_drv.h"
 
 #define i2c_write   stm32_i2c_write
 #define i2c_read    stm32_i2c_read
 #define get_ms      stm32_get_ms
+#define delay_ms    stm32_delay_ms
 #define log_i       MPL_LOGI
 #define log_e       MPL_LOGE
 #define min(a,b) ((a<b)?a:b)
