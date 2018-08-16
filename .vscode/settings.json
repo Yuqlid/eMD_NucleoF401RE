@@ -13,6 +13,7 @@
         "stm32_empl_drv.h": "c",
         "packet.h": "c",
         "arm_math.h": "c",
-        "inv_mpu_dmp_motion_driver.h": "c"
+        "inv_mpu_dmp_motion_driver.h": "c",
+        "storage_manager.h": "c"
     }
 }
