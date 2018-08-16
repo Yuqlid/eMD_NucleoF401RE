@@ -8,6 +8,9 @@
 
 #ifndef INC_UART_UTIL_HAL_H_
 #define INC_UART_UTIL_HAL_H_
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #include "stm32f4xx_hal.h"
 #include <stdbool.h>
@@ -33,5 +36,7 @@ int16_t UART_Util_SendByte(UART_HandleTypeDef *huart, UART_Buffer *buf, uint8_t 
 int putch(uint8_t data);
 uint8_t getch(void);
 
-
+#ifdef __cplusplus
+}
+#endif
 #endif /* INC_UART_UTIL_HAL_H_ */
