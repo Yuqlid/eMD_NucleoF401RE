@@ -5,6 +5,7 @@
  *      Author: Yuki
  */
 // http://www.eevblog.com/forum/microcontrollers/_best_-way-to-load-uart-data-to-ring-buffer-with-stm32hal/msg1071292/#msg1071292
+// https://raw.githubusercontent.com/scramble-ssl/main_stm32_2018/master/Src/uart.c
 
 #include "main.h"
 #include "uart_util_hal.h"
