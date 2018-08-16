@@ -62,7 +62,11 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c \
 Core/Src/system_stm32f4xx.c  \
 Core/Src/uart_util_hal.c \
-Core/Src/syscalls.c
+Core/Src/syscalls.c \
+$(wildcard Drivers/eMD6/driver/eMPL/*.c) \
+Drivers/eMD6/driver/stm32L/log_stm32.c \
+Drivers/eMD6/eMPL-hal/eMPL_outputs.c \
+$(wildcard Drivers/eMD6/mllite/*.c)
 
 # ASM sources
 ASM_SOURCES =  \
@@ -111,8 +115,14 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F401xE
-
+-DSTM32F401xE \
+-DMPU9250 \
+-DEMPL_TARGET_STM32F4 \
+-DUSE_DMP \
+-DEMPL \
+-DEMPL_LOG_NDEBUG=1 \
+-DREMOVE_LOGGING \
+-DARM_MATH_CM4
 
 # AS includes
 AS_INCLUDES = 
@@ -123,7 +133,13 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_HAL_Driver/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-IDrivers/eMD6/driver/eMPL \
+-IDrivers/eMD6/driver/include \
+-IDrivers/eMD6/driver/stm32L \
+-IDrivers/eMD6/eMPL-hal \
+-IDrivers/eMD6/mllite \
+-IDrivers/eMD6/mpl
 
 
 # compile gcc flags
@@ -147,8 +163,8 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 LDSCRIPT = STM32F401RETx_FLASH.ld
 
 # libraries
-LIBS = -lc -lm -lnosys 
-LIBDIR = 
+LIBS = -lc -lm -lnosys -llibmplmpu
+LIBDIR = -LDrivers/eMD6/mpl
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
