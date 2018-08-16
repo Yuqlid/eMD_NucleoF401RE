@@ -38,7 +38,8 @@ BUILD_DIR = build
 C_SOURCES =  \
 $(wildcard Core/Src/*.c) \
 $(wildcard Drivers/STM32F4xx_HAL_Driver/Src/*.c) \
-$(wildcard Drivers/eMD6/driver/eMPL/*.c) \
+Drivers/eMD6/driver/eMPL/inv_mpu_dmp_motion_driver.c \
+Drivers/eMD6/driver/eMPL/inv_mpu.c \
 Drivers/eMD6/driver/stm32L/log_stm32.c \
 Drivers/eMD6/eMPL-hal/eMPL_outputs.c \
 $(wildcard Drivers/eMD6/mllite/*.c)
@@ -90,17 +91,19 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F401xE
+-DSTM32F401xE \
+-D__weak="__attribute__((weak))" \
+-D__packed="__attribute__((__packed__))"
 
 # C defines for eMD6
 C_DEFS_EMD = \
 -DMPU9250 \
 -DEMPL_TARGET_STM32F4 \
--DUSE_DMP \
 -DEMPL \
--DEMPL_LOG_NDEBUG=1 \
--DREMOVE_LOGGING \
--DARM_MATH_CM4
+-DARM_MATH_CM4 
+#-DMPL_LOG_NDEBUG=1
+#-DREMOVE_LOGGING	#MPL_LOGEの出力を切り替え
+#-DUSE_DMP \
 
 C_DEFS += $(C_DEFS_EMD)
 
@@ -129,10 +132,12 @@ C_INCLUDES += $(C_INCLUDES_EMD)
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections 
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -g -gdwarf-2
+CFLAGS += \
+-g \
+-gdwarf-2
 endif
 
 
@@ -149,7 +154,7 @@ LDSCRIPT = STM32F401RETx_FLASH.ld
 # libraries
 LIBS = -lc -lm -lnosys -llibmplmpu
 LIBDIR = -LDrivers/eMD6/mpl
-LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
+LDFLAGS = $(MCU) -specs=nano.specs -specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
